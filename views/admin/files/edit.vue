@@ -101,7 +101,8 @@ export default defineComponent({
     // Set default action title
     const title = ref(t('motor-media.files.new'))
 
-    const multiple = ref(true)
+    // FIXME: this is buggy (/see FormFileField)
+    const multiple = ref(false)
 
     // Get id from route and load record
     const id: string = router.currentRoute.value.params.id as string
