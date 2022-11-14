@@ -62,7 +62,7 @@
         <FormsCheckboxTreeField
           name="categories"
           id="categories"
-          :label="$t('motor-backend.categories.categories')"
+          :label="$t('motor-admin.categories.categories')"
           :value="model.categories"
           :tree="treeData.children"
         ></FormsCheckboxTreeField>

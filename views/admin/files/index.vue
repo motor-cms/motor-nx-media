@@ -23,7 +23,7 @@ import DeleteButton from 'motor-core/components/admin/cell/DeleteButton.vue'
 import grid from 'motor-media/grids/fileGrid'
 import CellFile from 'motor-core/components/admin/cell/File.vue'
 import axios from 'axios'
-import categoryRepository from 'motor-backend/api/category'
+import categoryRepository from 'motor-admin/api/category'
 
 export default defineComponent({
   name: 'admin-motor-media.files',
@@ -75,7 +75,7 @@ export default defineComponent({
         options: {
           parameter: 'category_id',
           emptyOption:
-            t('global.filter') + ': ' + t('motor-backend.categories.category'),
+            t('global.filter') + ': ' + t('motor-admin.categories.category'),
           options: <any>[],
         },
       },
