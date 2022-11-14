@@ -4,7 +4,7 @@ import * as yup from 'yup'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import modelRepository from 'motor-media/api/file'
-import categoryTreeRepository from 'motor-backend/api/categoryTree'
+import categoryTreeRepository from 'motor-admin/api/categoryTree'
 
 export default function fileForm() {
   // Load i18n module
