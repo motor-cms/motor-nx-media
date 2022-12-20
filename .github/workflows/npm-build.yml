@@ -1,0 +1,25 @@
+name: Publish package registry
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*.*.*'
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url:  ${{ secrets.REGISTRY_URL }}
+          scope: '@motor'
+      - run: npm config set registry ${{ secrets.REGISTRY_URL }}
+      - run: npm set //${{ secrets.REGISTRY_DOMAIN }}/:_authToken ${{ secrets.PIPELINE_AUTH_TOKEN }}
+      - run: npm ci
+      - run: npm publish
