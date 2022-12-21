@@ -1,20 +1,23 @@
 import axios from 'axios'
-import baseForm from 'motor-core/forms/baseForm'
-import * as yup from 'yup'
+import baseForm from 'motor-nx-core/forms/baseForm'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import modelRepository from 'motor-media/api/file'
-import categoryTreeRepository from 'motor-admin/api/categoryTree'
+import modelRepository from 'motor-nx-media/api/file'
+import categoryTreeRepository from 'motor-nx-admin/api/categoryTree'
+import { toFormValidator } from '@vee-validate/zod';
+import * as zod from 'zod';
 
 export default function fileForm() {
   // Load i18n module
   const { t, tm } = useI18n()
 
   // Validation schema
-  const schema = yup.object().shape({
-    author: yup.string().required(),
-    categories: yup.array().min(1).required(),
-  })
+  const schema = toFormValidator(
+      zod.object({
+        author: zod.string().min(3),
+        categories: zod.number().array(),
+      })
+  )
 
   // Record
   const model = ref({
