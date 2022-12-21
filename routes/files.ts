@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from 'vue-router'
-import checkAuth from 'motor-core/router/checkAuth'
+import checkAuth from 'motor-nx-core/router/checkAuth'
 
 const routes: Array<RouteRecordRaw> = [
   /**
@@ -13,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
       title: 'motor-media.files.files',
     },
     beforeEnter: checkAuth,
-    component: () => import('motor-media/views/admin/files/index.vue'),
+    component: () => import('motor-nx-media/views/admin/files/index.vue'),
   },
   {
     path: '/admin/motor-media/files/create',
@@ -31,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
       ],
     },
     beforeEnter: checkAuth,
-    component: () => import('motor-media/views/admin/files/edit.vue'),
+    component: () => import('motor-nx-media/views/admin/files/edit.vue'),
   },
   {
     path: '/admin/motor-media/files/edit/:id',
@@ -49,7 +49,7 @@ const routes: Array<RouteRecordRaw> = [
       ],
     },
     beforeEnter: checkAuth,
-    component: () => import('motor-media/views/admin/files/edit.vue'),
+    component: () => import('motor-nx-media/views/admin/files/edit.vue'),
   },
 ]
 

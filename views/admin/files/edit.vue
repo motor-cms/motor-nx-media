@@ -72,13 +72,13 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
-import AdminCommonForm from 'motor-core/components/admin/common/Form.vue'
-import FormsInputField from 'motor-core/components/forms/InputField.vue'
-import FormsFileField from 'motor-core/components/forms/FileField.vue'
-import FormsCheckboxTreeField from 'motor-core/components/forms/CheckboxTreeField.vue'
+import AdminCommonForm from 'motor-nx-core/components/admin/common/Form.vue'
+import FormsInputField from 'motor-nx-core/components/forms/InputField.vue'
+import FormsFileField from 'motor-nx-core/components/forms/FileField.vue'
+import FormsCheckboxTreeField from 'motor-nx-core/components/forms/CheckboxTreeField.vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import form from 'motor-media/forms/fileForm'
+import form from 'motor-nx-media/forms/fileForm'
 
 export default defineComponent({
   name: 'admin-motor-media-files-create',
