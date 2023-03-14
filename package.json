@@ -1,5 +1,5 @@
 {
-  "name": "motor-nx-media",
+  "name": "@zrm/motor-nx-media",
   "type": "module",
   "version": "1.0.0",
   "main": "./nuxt.config.ts",
