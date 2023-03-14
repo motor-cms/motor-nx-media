@@ -1,6 +1,6 @@
 <template>
   <AdminCommonForm
-    back-route="admin.motor-media.files"
+    :back-route="routeParser.routeDottedToSlash('admin.motor-media.files')"
     :title="title"
     @submit="onSubmit"
   >
@@ -47,14 +47,12 @@
             ></FormsInputField>
           </div>
           <div class="col-md-12">
-            <FormsFileField
+            <FileDisplayField
               name="file"
               id="file"
-              :allow-delete="false"
-              :multiple="multiple"
               :label="$t('motor-media.files.file')"
-              :value="model.file"
-            ></FormsFileField>
+              :file="model.file"
+            ></FileDisplayField>
           </div>
         </div>
       </div>
@@ -74,11 +72,12 @@
 import { defineComponent, ref, watch } from 'vue'
 import AdminCommonForm from 'motor-nx-core/components/admin/common/Form.vue'
 import FormsInputField from 'motor-nx-core/components/forms/InputField.vue'
-import FormsFileField from 'motor-nx-core/components/forms/FileField.vue'
+import FileDisplayField from '~/packages/motor-nx-core/components/forms/FileDisplayField.vue'
+import FileSingleUploadField from '~/packages/motor-nx-core/components/forms/FileUploadFieldOLD.vue'
 import FormsCheckboxTreeField from 'motor-nx-core/components/forms/CheckboxTreeField.vue'
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
 import form from 'motor-nx-media/forms/fileForm'
+import useRouteParser from "~/packages/motor-nx-core/composables/route/parse";
 
 export default defineComponent({
   name: 'admin-motor-media-files-create',
@@ -86,31 +85,22 @@ export default defineComponent({
     AdminCommonForm,
     FormsInputField,
     FormsCheckboxTreeField,
-    FormsFileField,
+    FileDisplayField,
   },
   setup() {
+    const routeParser = useRouteParser();
+
     // Load i18n module
     const { t } = useI18n()
 
-    // Load router
-    const router = useRouter()
-
     // Load form
-    const { model, getData, onSubmit, treeData } = form()
+    const { model, onSubmit, treeData } = form()
 
     // Set default action title
     const title = ref(t('motor-media.files.new'))
 
     // FIXME: this is buggy (/see FormFileField)
     const multiple = ref(false)
-
-    // Get id from route and load record
-    const id: string = router.currentRoute.value.params.id as string
-    if (id) {
-      title.value = t('motor-media.files.edit')
-      getData(id)
-      multiple.value = false
-    }
 
     // Sanitize roles
     watch(model, () => {
@@ -123,7 +113,6 @@ export default defineComponent({
           options.push(checkObject[1]['id'])
         }
       }
-
       model.value.categories = options
     })
 
@@ -133,6 +122,7 @@ export default defineComponent({
       onSubmit,
       treeData,
       multiple,
+      routeParser
     }
   },
 })
