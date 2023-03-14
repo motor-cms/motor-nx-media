@@ -19,8 +19,7 @@ jobs:
           node-version: '18.x'
           registry-url:  ${{ secrets.REGISTRY_URL }}
           scope: '@motor'
-      - run: npm config set registry https://registry.npmjs.org
-      - run: npm config set @zrm:registry https://npm.registry.zeitraum.io/
+      - run: npm config set registry https://npm.registry.zeitraum.io
       - run: npm set //${{ secrets.REGISTRY_DOMAIN }}/:_authToken ${{ secrets.PIPELINE_AUTH_TOKEN }}
       - run: npm ci
-      - run: npm publish
+      - run: npm publish --registry=
