@@ -70,14 +70,14 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
-import AdminCommonForm from 'motor-nx-core/components/admin/common/Form.vue'
-import FormsInputField from 'motor-nx-core/components/forms/InputField.vue'
-import FileDisplayField from '~/packages/motor-nx-core/components/forms/FileDisplayField.vue'
-import FileSingleUploadField from '~/packages/motor-nx-core/components/forms/FileUploadFieldOLD.vue'
-import FormsCheckboxTreeField from 'motor-nx-core/components/forms/CheckboxTreeField.vue'
+import AdminCommonForm from '@zrm/motor-nx-core/components/admin/common/Form.vue'
+import FormsInputField from '@zrm/motor-nx-core/components/forms/InputField.vue'
+import FileDisplayField from '@zrm/motor-nx-core/components/forms/FileDisplayField.vue'
+import FileSingleUploadField from '@zrm/motor-nx-core/components/forms/FileUploadFieldOLD.vue'
+import FormsCheckboxTreeField from '@zrm/motor-nx-core/components/forms/CheckboxTreeField.vue'
 import { useI18n } from 'vue-i18n'
-import form from 'motor-nx-media/forms/fileForm'
-import useRouteParser from "~/packages/motor-nx-core/composables/route/parse";
+import form from '@zrm/motor-nx-media/forms/fileForm'
+import useRouteParser from "@zrm/motor-nx-core/composables/route/parse";
 
 export default defineComponent({
   name: 'admin-motor-media-files-create',

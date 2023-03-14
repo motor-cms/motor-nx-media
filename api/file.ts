@@ -1,4 +1,4 @@
-import useApi from "motor-nx-core/composables/http/api";
+import useApi from "@zrm/motor-nx-core/composables/http/api";
 
 export default () => ({
     api: useApi(),

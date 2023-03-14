@@ -1,13 +1,13 @@
-import baseForm from 'motor-nx-core/forms/baseForm'
+import baseForm from '@zrm/motor-nx-core/forms/baseForm'
 import {ref} from 'vue'
 import {useI18n} from 'vue-i18n'
-import modelRepository from 'motor-nx-media/api/file'
-import categoryTreeRepository from 'motor-nx-admin/api/categoryTree'
+import modelRepository from '@zrm/motor-nx-media/api/file'
+import categoryTreeRepository from '@zrm/motor-nx-admin/api/categoryTree'
 import {toFormValidator} from '@vee-validate/zod';
 import * as zod from 'zod';
 import {Record} from "immutable";
-import {useCoreFormData} from "~/packages/motor-nx-core/composables/form/formData";
-import {useFormData} from "~/packages/motor-nx-media/composables/formData";
+import {useCoreFormData} from "@zrm/motor-nx-core/composables/form/formData";
+import {useFormData} from "@zrm/motor-nx-media/composables/formData";
 
 export default function fileForm() {
   // Load i18n module
