@@ -1,9 +1,8 @@
-import axios from 'axios'
 import baseGrid from 'motor-nx-core/grids/baseGrid'
-import modelRepository from 'motor-nx-media/api/file'
+import modelRepository from '../api/file'
 
 export default function fileGrid() {
-  const repository = modelRepository(axios)
+  const repository = modelRepository()
 
   const { rows, meta, refreshRecords, handleCellEvent } = baseGrid(
     repository,

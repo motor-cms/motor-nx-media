@@ -22,7 +22,6 @@ import EditButton from 'motor-nx-core/components/admin/cell/EditButton.vue'
 import DeleteButton from 'motor-nx-core/components/admin/cell/DeleteButton.vue'
 import grid from 'motor-nx-media/grids/fileGrid'
 import CellFile from 'motor-nx-core/components/admin/cell/File.vue'
-import axios from 'axios'
 import categoryRepository from 'motor-nx-admin/api/category'
 
 export default defineComponent({
@@ -62,7 +61,7 @@ export default defineComponent({
               name: t('global.edit'),
             },
           },
-          { name: 'DeleteButton', options: { name: t('global.delete') } },
+          { name: 'DeleteButton', options: { name: t('motor-admin.global.delete') } },
         ],
       },
     ])
@@ -81,13 +80,14 @@ export default defineComponent({
       },
     ])
 
-    // Get catgories from api
-    const categoryRepo = categoryRepository(axios)
-    categoryRepo.index({}, '1').then((response) => {
-      for (let i = 0; i < response.data.data.length; i++) {
+    onMounted(async () => {
+      // Get catgories from api
+      const categoryRepo = categoryRepository()
+      const {data: response } = await categoryRepo.index({}, '1');
+      for (let i = 0; i < response.value.data.length; i++) {
         filters.value[1].options.options.push({
-          name: response.data.data[i].name,
-          value: response.data.data[i].id,
+          name: response.value.data[i].name,
+          value: response.value.data[i].id,
         })
       }
     })
