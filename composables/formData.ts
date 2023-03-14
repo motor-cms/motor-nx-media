@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import categoryTreeRepository from "motor-nx-admin/api/categoryTree";
+import categoryTreeRepository from "@zrm/motor-nx-admin/api/categoryTree";
 
 export function useFormData() {
 

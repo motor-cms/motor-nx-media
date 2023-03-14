@@ -15,14 +15,14 @@
 </template>
 
 <script lang="ts">
-import AdminCommonGrid from 'motor-nx-core/components/admin/common/Grid.vue'
+import AdminCommonGrid from '@zrm/motor-nx-core/components/admin/common/Grid.vue'
 import { defineComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import EditButton from 'motor-nx-core/components/admin/cell/EditButton.vue'
-import DeleteButton from 'motor-nx-core/components/admin/cell/DeleteButton.vue'
-import grid from 'motor-nx-media/grids/fileGrid'
-import CellFile from 'motor-nx-core/components/admin/cell/File.vue'
-import categoryRepository from 'motor-nx-admin/api/category'
+import EditButton from '@zrm/motor-nx-core/components/admin/cell/EditButton.vue'
+import DeleteButton from '@zrm/motor-nx-core/components/admin/cell/DeleteButton.vue'
+import grid from '@zrm/motor-nx-media/grids/fileGrid'
+import CellFile from '@zrm/motor-nx-core/components/admin/cell/File.vue'
+import categoryRepository from '@zrm/motor-nx-admin/api/category'
 
 export default defineComponent({
   name: 'admin-motor-media.files',
