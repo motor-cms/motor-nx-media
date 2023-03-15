@@ -7,7 +7,7 @@ import {toFormValidator} from '@vee-validate/zod';
 import * as zod from 'zod';
 import {Record} from "immutable";
 import {useCoreFormData} from "@zrm/motor-nx-core/composables/form/formData";
-import {useFormData} from "@zrm/motor-nx-media/composables/formData";
+import {useMediaFormData} from "@zrm/motor-nx-media/composables/formData";
 
 export default function fileForm() {
   // Load i18n module
@@ -58,7 +58,7 @@ export default function fileForm() {
   )
 
   const { getRelevantFormData } = useCoreFormData()
-  const { treeData, getCategoryData } = useFormData();
+  const { treeData, getCategoryData } = useMediaFormData();
 
   onMounted(async () => {
     await getRelevantFormData(getData,[

@@ -1,7 +1,7 @@
 import {ref} from "vue";
 import categoryTreeRepository from "@zrm/motor-nx-admin/api/categoryTree";
 
-export function useFormData() {
+export function useMediaFormData() {
 
   const treeData = ref({})
 
