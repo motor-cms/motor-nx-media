@@ -2,24 +2,30 @@ import baseForm from '@zrm/motor-nx-core/forms/baseForm'
 import {ref} from 'vue'
 import {useI18n} from 'vue-i18n'
 import modelRepository from '@zrm/motor-nx-media/api/file'
-import categoryTreeRepository from '@zrm/motor-nx-admin/api/categoryTree'
-import {toFormValidator} from '@vee-validate/zod';
-import * as zod from 'zod';
-import {Record} from "immutable";
+
 import {useCoreFormData} from "@zrm/motor-nx-core/composables/form/formData";
 import {useMediaFormData} from "@zrm/motor-nx-media/composables/formData";
+import {object, string, number, date, InferType, array} from 'yup';
 
 export default function fileForm() {
   // Load i18n module
   const {t, tm} = useI18n()
 
   // Validation schema
-  const schema = toFormValidator(
-    zod.object({
-      author: zod.string().min(3),
-      categories: zod.number().array(),
-    })
+  const schema = object(
+    {
+      author: string().min(3),
+      categories: array().of(number())
+    }
   )
+
+  let userSchema = object({
+    name: string().required(),
+    age: number().required().positive().integer(),
+    email: string().email(),
+    website: string().url().nullable(),
+    createdOn: date().default(() => new Date()),
+  });
 
   // Record
   const model = ref({
