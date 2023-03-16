@@ -11,6 +11,7 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-6">
+            {{model}}
             <FormsInputField
               type="text"
               name="description"
