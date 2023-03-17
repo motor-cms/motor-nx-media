@@ -4,7 +4,7 @@ import {useI18n} from 'vue-i18n'
 import modelRepository from '@zrm/motor-nx-media/api/file'
 import {useCoreFormData} from "@zrm/motor-nx-core/composables/form/formData";
 import {object, string, number, date, InferType, array} from 'yup';
-import {useMediaFormData} from "@zrm/motor-nx-admin/composables/formData";
+import {useFormData} from "@zrm/motor-nx-admin/composables/formData";
 
 export default function fileForm() {
   // Load i18n module
@@ -63,7 +63,7 @@ export default function fileForm() {
   )
 
   const { getRelevantFormData } = useCoreFormData()
-  const { treeData, getCategoryData } = useMediaFormData();
+  const { treeData, getCategoryData } = useFormData();
 
   onMounted(async () => {
     await getRelevantFormData(getData,[
