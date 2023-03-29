@@ -13,8 +13,16 @@ export default function fileForm() {
   // Validation schema
   const schema = object(
     {
-      author: string().min(3),
-      categories: array().of(number())
+      id: number().nullable(),
+      client_id: number().nullable(),
+      description: string().nullable(),
+      author: string().min(3).nullable(),
+      source: string().nullable(),
+      alt_text: string().nullable(),
+      is_global: number().nullable(),
+      categories: array().of(number()).min(1).required(),
+      files: array().min(1).required(),
+      file: object().nullable()
     }
   )
 
@@ -26,9 +34,11 @@ export default function fileForm() {
     createdOn: date().default(() => new Date()),
   });
 
+  type FileForm = InferType<typeof schema>;
+
   // Record
-  const model = ref({
-    id: 0,
+  const model = ref<FileForm>({
+    id: null,
     description: '',
     author: '',
     source: '',
