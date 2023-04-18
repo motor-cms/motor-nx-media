@@ -16,7 +16,7 @@
               name="description"
               id="description"
               :label="$t('motor-media.files.description')"
-              :value="model.description"
+              v-model="model.description"
             ></FormsInputField>
           </div>
           <div class="col-md-6">
@@ -25,7 +25,7 @@
               name="author"
               id="author"
               :label="$t('motor-media.files.author')"
-              :value="model.author"
+              v-model="model.author"
             ></FormsInputField>
           </div>
           <div class="col-md-6">
@@ -34,7 +34,7 @@
               name="source"
               id="source"
               :label="$t('motor-media.files.source')"
-              :value="model.source"
+              v-model="model.source"
             ></FormsInputField>
           </div>
           <div class="col-md-6">
@@ -43,16 +43,16 @@
               name="alt_text"
               id="alt_text"
               :label="$t('motor-media.files.alt_text')"
-              :value="model.alt_text"
+              v-model="model.alt_text"
             ></FormsInputField>
           </div>
           <div class="col-md-12">
-            <FileDisplayField
+            <FormsFileDisplayField
               name="file"
               id="file"
               :label="$t('motor-media.files.file')"
               :file="model.file"
-            ></FileDisplayField>
+            ></FormsFileDisplayField>
           </div>
         </div>
       </div>
@@ -68,62 +68,36 @@
     </div>
   </AdminCommonForm>
 </template>
-<script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
-import AdminCommonForm from '@zrm/motor-nx-core/components/admin/common/Form.vue'
-import FormsInputField from '@zrm/motor-nx-core/components/forms/InputField.vue'
-import FileDisplayField from '@zrm/motor-nx-core/components/forms/FileDisplayField.vue'
-import FileSingleUploadField from '@zrm/motor-nx-core/components/forms/FileUploadFieldOLD.vue'
-import FormsCheckboxTreeField from '@zrm/motor-nx-core/components/forms/CheckboxTreeField.vue'
+<script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import form from '@zrm/motor-nx-media/forms/fileForm'
 import useRouteParser from "@zrm/motor-nx-core/composables/route/parse";
 
-export default defineComponent({
-  name: 'admin-motor-media-files-create',
-  components: {
-    AdminCommonForm,
-    FormsInputField,
-    FormsCheckboxTreeField,
-    FileDisplayField,
-  },
-  setup() {
-    const routeParser = useRouteParser();
+const routeParser = useRouteParser();
 
-    // Load i18n module
-    const { t } = useI18n()
+// Load i18n module
+const { t } = useI18n()
 
-    // Load form
-    const { model, onSubmit, treeData } = form()
+// Load form
+const { model, onSubmit, treeData } = form()
 
-    // Set default action title
-    const title = ref(t('motor-media.files.new'))
+// Set default action title
+const title = ref(t('motor-media.files.new'))
 
-    // FIXME: this is buggy (/see FormFileField)
-    const multiple = ref(false)
+// FIXME: this is buggy (/see FormFileField)
+const multiple = ref(false)
 
-    // Sanitize roles
-    watch(model, () => {
-      const checkAgainst = Object.entries(model.value.categories)
+// Sanitize roles
+watch(model, () => {
+  const checkAgainst = Object.entries(model.value.categories)
 
-      const options = []
-      for (const object of checkAgainst) {
-        const checkObject: any = object
-        if (checkObject[1]) {
-          options.push(checkObject[1]['id'])
-        }
-      }
-      model.value.categories = options
-    })
-
-    return {
-      model,
-      title,
-      onSubmit,
-      treeData,
-      multiple,
-      routeParser
+  const options = []
+  for (const object of checkAgainst) {
+    const checkObject: any = object
+    if (checkObject[1]) {
+      options.push(checkObject[1]['id'])
     }
-  },
+  }
+  model.value.categories = options
 })
 </script>
