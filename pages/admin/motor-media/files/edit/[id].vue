@@ -7,6 +7,7 @@
     <h6 class="text-uppercase text-body text-xs font-weight-bolder">
       Basic information
     </h6>
+    {{model}}
     <div class="row">
       <div class="col-md-8">
         <div class="row">
@@ -47,12 +48,13 @@
             ></FormsInputField>
           </div>
           <div class="col-md-12">
-            <FormsFileDisplayField
+            <FormsFileUploadField
               name="file"
+              :allow-delete="true"
               id="file"
               :label="$t('motor-media.files.file')"
-              :file="model.file"
-            ></FormsFileDisplayField>
+              v-model="model.file"
+            ></FormsFileUploadField>
           </div>
         </div>
       </div>
@@ -70,7 +72,7 @@
 </template>
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import form from '@zrm/motor-nx-media/forms/fileForm'
+import fileForm from '@zrm/motor-nx-media/forms/fileForm'
 import useRouteParser from "@zrm/motor-nx-core/composables/route/parse";
 
 const routeParser = useRouteParser();
@@ -79,7 +81,7 @@ const routeParser = useRouteParser();
 const { t } = useI18n()
 
 // Load form
-const { model, onSubmit, treeData } = form()
+const { model, onSubmit, treeData, form} = fileForm()
 
 // Set default action title
 const title = ref(t('motor-media.files.new'))

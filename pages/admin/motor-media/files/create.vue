@@ -4,6 +4,8 @@
     :title="title"
     @submit="onSubmit"
   >
+    {{form.errors}}
+    {{model}}
     <h6 class="text-uppercase text-body text-xs font-weight-bolder">
       Basic information
     </h6>
@@ -11,7 +13,6 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-6">
-            {{ model }}
             <FormsInputField
               type="text"
               name="description"
@@ -73,13 +74,13 @@
 </template>
 <script setup lang="ts">
 import {useI18n} from 'vue-i18n'
-import form from '@zrm/motor-nx-media/forms/fileForm'
+import fileForm from '@zrm/motor-nx-media/forms/fileForm'
 
 // Load i18n module
 const {t} = useI18n()
 
 // Load form
-const {model, onSubmit, treeData} = form()
+const {model, onSubmit, treeData, form} = fileForm()
 
 // Set default action title
 const title = ref(t('motor-media.files.new'))
