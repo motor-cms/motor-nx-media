@@ -3,7 +3,7 @@ import {ref} from 'vue'
 import {useI18n} from 'vue-i18n'
 import modelRepository from '@zrm/motor-nx-media/api/file'
 import {useCoreFormData} from "@zrm/motor-nx-core/composables/form/formData";
-import {object, string, number, date, InferType, array} from 'yup';
+import {object, string, number, date, InferType, array, Schema} from 'yup';
 import {useFormData} from "@zrm/motor-nx-admin/composables/formData";
 
 export default function fileForm() {
@@ -20,19 +20,11 @@ export default function fileForm() {
       source: string().nullable(),
       alt_text: string().nullable(),
       is_global: number().nullable(),
-      categories: array().of(number()).min(1).required(),
-      files: array().min(1).required(),
+      categories: array().min(1).required(),
+      files: array().nullable(),
       file: object().nullable()
     }
   )
-
-  let userSchema = object({
-    name: string().required(),
-    age: number().required().positive().integer(),
-    email: string().email(),
-    website: string().url().nullable(),
-    createdOn: date().default(() => new Date()),
-  });
 
   type FileForm = InferType<typeof schema>;
 
@@ -45,25 +37,25 @@ export default function fileForm() {
     alt_text: '',
     categories: [],
     files: [],
-    file: {},
+    file: null,
   })
 
   // Sanitize file data
   const sanitizer = async (formData: any) => {
       const tempFiles = []
       for (let i = 0; i < formData.files.length; i++) {
-        if (formData.files[i].dataUrl !== '') {
-          const startBase64 = formData.files[i].dataUrl.indexOf(',') + 1
+        if (formData.files[i].url !== '') {
+          const startBase64 = formData.files[i].url.indexOf(',') + 1
           tempFiles.push({
             name: formData.files[i].name,
-            dataUrl: formData.files[i].dataUrl.substring(startBase64),
+            dataUrl: formData.files[i].url.substring(startBase64),
           })
         }
       }
       formData.files = tempFiles
   }
 
-  const {getData, onSubmit} = baseForm(
+  const {onSubmit, form} = baseForm(
     'motor-media.files',
     'admin.motor-media.files',
     modelRepository(),
@@ -71,6 +63,14 @@ export default function fileForm() {
     schema,
     sanitizer
   )
+
+  const route = useRoute()
+  const getData = async () => {
+    if (!route.params.id) return;
+    const id: number = Number(route.params.id)
+    const {data: response} = await modelRepository().get(id)
+    model.value = response.value.data;
+  }
 
   const { getRelevantFormData } = useCoreFormData()
   const { treeData, getCategoryData } = useFormData();
@@ -84,6 +84,7 @@ export default function fileForm() {
   })
 
   return {
+    form,
     getData,
     onSubmit,
     model,
