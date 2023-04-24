@@ -16,11 +16,11 @@ export default function fileForm() {
       id: number().nullable(),
       client_id: number().nullable(),
       description: string().nullable(),
-      author: string().min(3).nullable(),
+      author: string().min(3).nullable().label(t('motor-media.files.author')),
       source: string().nullable(),
       alt_text: string().nullable(),
       is_global: number().nullable(),
-      categories: array().min(1).required(),
+      categories: array().min(1).required().label(t('motor-admin.categories.categories')),
       files: array().nullable(),
       file: object().nullable()
     }
