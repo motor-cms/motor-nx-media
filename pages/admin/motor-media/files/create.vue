@@ -4,8 +4,6 @@
     :title="title"
     @submit="onSubmit"
   >
-    {{form.errors}}
-    {{model}}
     <h6 class="text-uppercase text-body text-xs font-weight-bolder">
       Basic information
     </h6>
