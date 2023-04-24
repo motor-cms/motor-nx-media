@@ -94,6 +94,16 @@ export default function fileForm() {
     ]);
   })
 
+  watch(() => model.value.file, () => {
+    model.value.files = []
+    if (model.value.file) {
+      if (model.value.file.name) {
+        model.value.files.push(model.value.file);
+        return;
+      }
+    }
+  })
+
   return {
     form,
     getData,
