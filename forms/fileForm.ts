@@ -42,28 +42,31 @@ export default function fileForm() {
 
   // Sanitize file data
   const sanitizer = async (formData: any) => {
-      if (formData.files) {
-        const tempFiles = []
-        for (let i = 0; i < formData.files.length; i++) {
-          if (formData.files[i].url !== '') {
-            const startBase64 = formData.files[i].url.indexOf(',') + 1
-            tempFiles.push({
-              name: formData.files[i].name,
-              dataUrl: formData.files[i].url.substring(startBase64),
-            })
-          }
+    if (formData.files) {
+      const tempFiles = []
+      for (let i = 0; i < formData.files.length; i++) {
+        if (formData.files[i].url !== '') {
+          const startBase64 = formData.files[i].url.indexOf(',') + 1
+          tempFiles.push({
+            name: formData.files[i].name,
+            dataUrl: formData.files[i].url.substring(startBase64),
+          })
         }
-        formData.files = tempFiles
       }
-      // Check if form hase file (=file edit) and if file is old file
-      if (formData.file && !formData.file.uuid) {
+      formData.files = tempFiles
+    }
+    // Check if form hase file (=file edit) and if file is old file
+    if (formData.file && Object.keys(formData.file).length) {
+      if (!formData.file.uuid) {
         const startBase64 = formData.file.url.indexOf(',') + 1
         formData.file = {
           name: formData.file.name,
           dataUrl: formData.file.url.substring(startBase64)
         }
       }
-
+    } else {
+      formData.file = false;
+    }
   }
 
   const {onSubmit, form} = baseForm(
@@ -83,13 +86,13 @@ export default function fileForm() {
     model.value = response.value.data;
   }
 
-  const { getRelevantFormData } = useCoreFormData()
-  const { treeData, getCategoryData } = useFormData();
+  const {getRelevantFormData} = useCoreFormData()
+  const {treeData, getCategoryData} = useFormData();
 
   onMounted(async () => {
-    await getRelevantFormData(getData,[
+    await getRelevantFormData(getData, [
       getCategoryData
-    ],[
+    ], [
       getCategoryData,
     ]);
   })
