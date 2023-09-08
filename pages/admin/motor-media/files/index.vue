@@ -80,16 +80,14 @@ const loadComponents = [
 // WE START THE OUTSOURCED CODE HERE
 const {rows, meta, refreshRecords, handleCellEvent} = grid()
 
-onMounted(async () => {
-  await refreshRecords();
-  // Get catgories from api
-  const categoryRepo = categoryRepository()
-  const {data: response} = await categoryRepo.index({}, '1');
-  for (let i = 0; i < response.value.data.length; i++) {
-    filters.value[1].options.options.push({
-      name: response.value.data[i].name,
-      value: response.value.data[i].id,
-    })
-  }
-})
+await refreshRecords();
+// Get catgories from api
+const {data: response} = await categoryRepository().index({}, '85816152957388');
+for (let i = 0; i < response.value.data.length; i++) {
+  filters.value[1].options.options.push({
+    name: response.value.data[i].name,
+    value: response.value.data[i].id,
+  })
+}
+
 </script>
