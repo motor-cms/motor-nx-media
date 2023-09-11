@@ -9,7 +9,7 @@
     :filters="filters"
     resource="files"
     :loadComponents="loadComponents"
-    @submit="refreshRecords"
+    @submit="refreshGridData"
     @submit-cell="handleCellEvent"
   ></AdminCommonGrid>
 </template>
@@ -19,6 +19,8 @@ import {useI18n} from 'vue-i18n'
 import grid from '@zrm/motor-nx-media/grids/fileGrid'
 import CellFile from '@zrm/motor-nx-core/components/admin/cell/File.vue'
 import categoryRepository from '@zrm/motor-nx-admin/api/category'
+import categoryTreeForm from "~/packages/motor-nx-admin/forms/categoryTreeForm";
+import {CategoryScopes} from "~/packages/motor-nx-admin/types/categories.enums";
 
 // Load i18n module
 const {t} = useI18n()
@@ -80,13 +82,24 @@ const loadComponents = [
 // WE START THE OUTSOURCED CODE HERE
 const {rows, meta, refreshRecords, handleCellEvent} = grid()
 
+const refreshGridData = async () => {
+  const appStore = useAppStore();
+  appStore.updateInBackground(true);
+  await refreshRecords()
+  appStore.updateInBackground(false);
+}
+
 await refreshRecords();
+
+const form = categoryTreeForm();
+
 // Get catgories from api
-const {data: response} = await categoryRepository().index({}, '85816152957388');
-for (let i = 0; i < response.value.data.length; i++) {
+await form.getCategoryDataByScope(CategoryScopes.MEDIA);
+
+for (let i = 0; i < form.treeData.value.children.length; i++) {
   filters.value[1].options.options.push({
-    name: response.value.data[i].name,
-    value: response.value.data[i].id,
+    name: form.treeData.value.children[i].name,
+    value: form.treeData.value.children[i].id,
   })
 }
 
