@@ -73,12 +73,13 @@
 <script setup lang="ts">
 import {useI18n} from 'vue-i18n'
 import fileForm from '@zrm/motor-nx-media/forms/fileForm'
+import {CategoryScopes} from "~/packages/motor-nx-admin/types/categories.enums";
 
 // Load i18n module
 const {t} = useI18n()
 
 // Load form
-const {model, onSubmit, treeData, form} = fileForm()
+const {model, onSubmit, treeData, form, getCategoryDataByScope} = fileForm()
 
 // Set default action title
 const title = ref(t('motor-media.files.new'))
@@ -98,4 +99,6 @@ watch(model, () => {
   }
   model.value.categories = options
 })
+
+await getCategoryDataByScope(CategoryScopes.MEDIA)
 </script>

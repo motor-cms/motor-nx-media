@@ -1,36 +1,17 @@
 import baseForm from '@zrm/motor-nx-core/forms/baseForm'
-import {ref} from 'vue'
 import {useI18n} from 'vue-i18n'
 import modelRepository from '@zrm/motor-nx-media/api/file'
-import {useCoreFormData} from "@zrm/motor-nx-core/composables/form/formData";
 import {object, string, number, date, InferType, array, Schema} from 'yup';
-import {useAdminFormDataStore} from "~/packages/motor-nx-admin/composables/formData";
-
+import {storeToRefs} from "pinia";
 export default function fileForm() {
   // Load i18n module
   const {t, tm} = useI18n()
 
-  // Validation schema
-  const schema = object(
-    {
-      id: number().nullable(),
-      client_id: number().nullable(),
-      description: string().nullable(),
-      author: string().min(3).nullable().label(t('motor-media.files.author')),
-      source: string().nullable(),
-      alt_text: string().nullable(),
-      is_global: number().nullable(),
-      categories: array().min(1).required().label(t('motor-admin.categories.categories')),
-      files: array().nullable(),
-      file: object().nullable()
-    }
-  )
-
-  type FileForm = InferType<typeof schema>;
-
   // Record
-  const model = ref<FileForm>({
+  const initialModelData = {
     id: null,
+  }
+  const initialFormData = {
     description: '',
     author: '',
     source: '',
@@ -38,7 +19,23 @@ export default function fileForm() {
     categories: [],
     files: [],
     file: null,
-  })
+  }
+
+  const formStore = useFormStore();
+  const {model, formSchema} = storeToRefs(formStore);
+  formStore.init(initialModelData, initialFormData);
+  formSchema.value =  {
+    id: number().nullable(),
+    client_id: number().nullable(),
+    description: string().nullable(),
+    author: string().min(3).nullable().label(t('motor-media.files.author')),
+    source: string().nullable(),
+    alt_text: string().nullable(),
+    is_global: number().nullable(),
+    categories: array().min(1).required().label(t('motor-admin.categories.categories')),
+    files: array().nullable(),
+    file: object().nullable()
+  }
 
   // Sanitize file data
   const sanitizer = async (formData: any) => {
@@ -73,8 +70,6 @@ export default function fileForm() {
     'motor-media.files',
     'admin.motor-media.files',
     modelRepository(),
-    model,
-    schema,
     sanitizer
   )
 
@@ -86,16 +81,6 @@ export default function fileForm() {
     model.value = response.value.data;
   }
 
-  const {getRelevantFormData} = useCoreFormData()
-  const {treeData, getCategoryData} = useAdminFormDataStore();
-
-  onMounted(async () => {
-    await getRelevantFormData(getData, [
-      getCategoryData
-    ], [
-      getCategoryData,
-    ]);
-  })
 
   watch(() => model.value.file, () => {
     model.value.files = []
@@ -112,6 +97,6 @@ export default function fileForm() {
     getData,
     onSubmit,
     model,
-    treeData,
+    ...useFormData()
   }
 }
