@@ -62,7 +62,7 @@
           name="categories"
           id="categories"
           :label="$t('motor-admin.categories.categories')"
-          :value="model.categories"
+          v-model="model.categories"
           :tree="treeData.children"
         ></FormsCheckboxTreeField>
       </div>
@@ -73,6 +73,7 @@
 import { useI18n } from 'vue-i18n'
 import fileForm from '@zrm/motor-nx-media/forms/fileForm'
 import useRouteParser from "@zrm/motor-nx-core/composables/route/parse";
+import {CategoryScopes} from "~/packages/motor-nx-admin/types/categories.enums";
 
 const routeParser = useRouteParser();
 
@@ -80,7 +81,7 @@ const routeParser = useRouteParser();
 const { t } = useI18n()
 
 // Load form
-const { model, onSubmit, treeData, form} = fileForm()
+const { model, onSubmit, treeData, form, getData, getCategoryDataByScope} = fileForm()
 
 // Set default action title
 const title = ref(t('motor-media.files.new'))
@@ -101,4 +102,8 @@ watch(model, () => {
   }
   model.value.categories = options
 })
+
+await getData();
+await getCategoryDataByScope(CategoryScopes.MEDIA)
+
 </script>
