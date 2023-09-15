@@ -66,7 +66,7 @@ export default function fileForm() {
     }
   }
 
-  const {onSubmit, form} = baseForm(
+  const {onSubmit, form, getData} = baseForm(
     'motor-media.files',
     'admin.motor-media.files',
     modelRepository(),
@@ -74,12 +74,6 @@ export default function fileForm() {
   )
 
   const route = useRoute()
-  const getData = async () => {
-    if (!route.params.id) return;
-    const id: number = Number(route.params.id)
-    const {data: response} = await modelRepository().get(id)
-    model.value = response.value.data;
-  }
 
 
   watch(() => model.value.file, () => {
