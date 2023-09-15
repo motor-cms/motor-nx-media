@@ -89,21 +89,10 @@ const title = ref(t('motor-media.files.new'))
 // FIXME: this is buggy (/see FormFileField)
 const multiple = ref(false)
 
-// Sanitize roles
-watch(model, () => {
-  const checkAgainst = Object.entries(model.value.categories)
-
-  const options = []
-  for (const object of checkAgainst) {
-    const checkObject: any = object
-    if (checkObject[1]) {
-      options.push(checkObject[1]['id'])
-    }
-  }
-  model.value.categories = options
-})
-
 await getData();
 await getCategoryDataByScope(CategoryScopes.MEDIA)
+model.value.categories = model.value.categories.map((category) => {
+  return category.id
+})
 
 </script>
