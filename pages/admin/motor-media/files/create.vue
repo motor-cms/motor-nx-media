@@ -73,7 +73,7 @@
 <script setup lang="ts">
 import {useI18n} from 'vue-i18n'
 import fileForm from '@zrm/motor-nx-media/forms/fileForm'
-import {CategoryScopes} from "~/packages/motor-nx-admin/types/categories.enums";
+import {CategoryScopes} from "@zrm/motor-nx-admin/types/categories.enums";
 
 // Load i18n module
 const {t} = useI18n()
