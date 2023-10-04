@@ -53,6 +53,7 @@
               id="file"
               :label="$t('motor-media.files.file')"
               v-model="model.file"
+              :fullScreenDragAndDrop="true"
             ></FormsFileUploadField>
           </div>
         </div>

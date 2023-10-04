@@ -54,6 +54,7 @@
               :multiple="true"
               :label="$t('motor-media.files.file')"
               v-model="model.files"
+              :fullScreenDragAndDrop="true"
             ></FormsFileUploadField>
           </div>
         </div>
