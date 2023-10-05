@@ -87,9 +87,6 @@ const { model, onSubmit, treeData, form, getData, getCategoryDataByScope} = file
 // Set default action title
 const title = ref(t('motor-media.files.new'))
 
-// FIXME: this is buggy (/see FormFileField)
-const multiple = ref(false)
-
 await getData();
 await getCategoryDataByScope(CategoryScopes.MEDIA)
 model.value.categories = model.value.categories.map((category) => {
