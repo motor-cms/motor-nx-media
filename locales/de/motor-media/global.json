@@ -3,5 +3,8 @@
   "file_not_found": "Datei nicht gefunden",
   "download": "Herunterladen",
   "drop_file_here": "Datei hier ablegen",
-  "drop_files_here": "Dateien hier ablegen"
+  "drop_files_here": "Dateien hier ablegen",
+  "file": "Datei",
+  "type": "Typ",
+  "size": "Größe"
 }

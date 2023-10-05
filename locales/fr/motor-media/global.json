@@ -3,5 +3,8 @@
   "file_not_found": "Fichier introuvable",
   "download": "Télécharger",
   "drop_file_here": "Glissez/déposez un fichier ici",
-  "drop_files_here": "Gliissez/déposez des fichiers ici"
+  "drop_files_here": "Gliissez/déposez des fichiers ici",
+  "file": "Fichier",
+  "type": "Type",
+  "size": "Taille"
 }
