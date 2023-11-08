@@ -2,7 +2,7 @@
   <AdminCommonGrid
     :name="$t('motor-media.files.files')"
     create-route="admin.motor-media.files.create"
-    :create-label="$t('motor-media.files.new')"
+    :create-label="$t('motor-media.files.create')"
     :rows="rows"
     :columns="columns"
     :meta="meta"
