@@ -144,7 +144,16 @@
     >
       <div class="media-modal card">
         <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
-          <a href="javascript:;" class="d-block">
+          <vue-easy-lightbox
+            v-if="record.exists && isImage(record.file.mime_type)"
+            scrollDisabled
+            moveDisabled
+            :visible="visible"
+            :imgs="[record.file.conversions.preview]"
+            :index="0"
+            @hide="visible = false"
+          >
+          </vue-easy-lightbox>
             <img
               v-if="record.exists && isImage(record.file.mime_type)"
               :src="record.file.conversions.thumb"
@@ -154,11 +163,10 @@
             <span v-if="!record.exists">{{
                 $t('motor-media.global.file_not_found')
               }}</span>
-          </a>
         </div>
 
-        <div class="card-body pt-2">
-          <a href="javascript:;" class="card-title d-block text-darker">
+        <div class="card-body pt-1 pb-1">
+          <a href="#" @click.prevent="chooseImage(record)" class="card-title d-block text-darker">
             {{ record.file.name }}
           </a>
         </div>
@@ -167,14 +175,35 @@
     </div>
   </div>
 </template>
-<style>
+<style lang="scss">
+.media-modal-card {
+  .card {
+    &:hover {
+      background-color: var(--c-primary-30);
+    }
+  }
+}
+.media-modal .card-header {
+  height: 210px;
+  background: none;
+}
 .media-modal-card {
   margin-bottom: 10px;
 }
 
-.media-modal img {
-  height: 200px;
+.media-modal.card {
+  height: 280px;
 }
+
+.media-modal img {
+  display: block;
+  max-height: 200px;
+  margin: 0 auto;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;}
 </style>
 <script lang="ts">
 import {
@@ -192,15 +221,18 @@ import {storeToRefs} from 'pinia';
 import Button from "@zrm/motor-nx-core/components/admin/cell/Button.vue";
 import useRouteParser from "@zrm/motor-nx-core/composables/route/parse";
 import SpinnerSmall from "@zrm/motor-nx-core/components/admin/partials/SpinnerSmall.vue";
+import VueEasyLightbox from "vue-easy-lightbox";
 
 export default defineComponent({
   components: {
+    VueEasyLightbox,
     SpinnerSmall,
     SearchFilter,
     SelectFilter,
     Skeletor,
     Button,
   },
+  emits: ['resolve'],
   props: {
     name: {
       type: String,
@@ -331,6 +363,10 @@ export default defineComponent({
       gridStore.init(props.meta);
     })
 
+    const chooseImage = (record:{}) => {
+      ctx.emit('resolve', record);
+    };
+
     return {
       filterValues,
       loading,
@@ -349,7 +385,8 @@ export default defineComponent({
       pageSelected,
       gridStore,
       isImage,
-      visible
+      visible,
+      chooseImage
     }
   },
 })
