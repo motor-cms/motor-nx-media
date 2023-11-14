@@ -33,7 +33,7 @@ export default function fileForm() {
     alt_text: string().nullable(),
     is_global: number().nullable(),
     categories: array().min(1).required().label(t('motor-admin.categories.categories')),
-    files: array().min(1),
+    files: array().min(1).label(t('motor-media.files.files')),
     file: object().nullable()
   }
 
