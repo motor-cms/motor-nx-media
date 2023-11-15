@@ -3,7 +3,8 @@ import useApi from "@zrm/motor-nx-core/composables/http/api";
 export default () => ({
     api: useApi(),
     index(params: any, cached: boolean = true) {
-        return this.api.get('files', cached, params)
+        console.log("params", params, cached);
+        return this.api.get('files', params, cached)
     },
 
     create(payload: object) {
