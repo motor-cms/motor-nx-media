@@ -5,7 +5,7 @@
     @submit="onSubmit"
   >
     <h6 class="text-uppercase text-body text-xs font-weight-bolder">
-      Basic information
+      {{ $t('motor-admin.global.basic_information')}}
     </h6>
     <div class="row">
       <div class="col-md-8">
@@ -85,7 +85,7 @@ const { t } = useI18n()
 const { model, onSubmit, treeData, form, getData, getCategoryDataByScope} = fileForm()
 
 // Set default action title
-const title = ref(t('motor-media.files.new'))
+const title = ref(t('motor-media.files.create'))
 
 await getData();
 await getCategoryDataByScope(CategoryScopes.MEDIA)
