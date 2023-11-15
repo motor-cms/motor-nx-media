@@ -21,6 +21,7 @@ import CellFile from '@zrm/motor-nx-core/components/admin/cell/File.vue'
 import categoryRepository from '@zrm/motor-nx-admin/api/category'
 import categoryTreeForm from "@zrm/motor-nx-admin/forms/categoryTreeForm";
 import {CategoryScopes} from "@zrm/motor-nx-admin/types/categories.enums";
+const route = useRoute();
 
 // Load i18n module
 const {t} = useI18n()
@@ -82,14 +83,14 @@ const loadComponents = [
 // WE START THE OUTSOURCED CODE HERE
 const {rows, meta, refreshRecords, handleCellEvent} = grid()
 
-const refreshGridData = async () => {
+const refreshGridData = async (params = {}) => {
   const appStore = useAppStore();
   appStore.updateInBackground(true);
-  await refreshRecords()
+  await refreshRecords(params)
   appStore.updateInBackground(false);
 }
 
-await refreshRecords();
+await refreshRecords(route.query);
 
 const form = categoryTreeForm();
 
