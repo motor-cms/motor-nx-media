@@ -97,11 +97,22 @@ const form = categoryTreeForm();
 // Get catgories from api
 await form.getCategoryDataByScope(CategoryScopes.MEDIA);
 
-for (let i = 0; i < form.treeData.value.children.length; i++) {
-  filters.value[1].options.options.push({
-    name: form.treeData.value.children[i].name,
-    value: form.treeData.value.children[i].id,
-  })
+console.log(form.treeData);
+
+// make a method that recursively takes all children elements from an array and pushes them into the options array
+const getChildren = (array: any[], options: any[], level: number = 0) => {
+  for (let i = 0; i < array.length; i++) {
+    options.push({
+      name: '- '.repeat(level) + array[i].name,
+      value: array[i].id,
+    })
+    if (array[i].children.length > 0) {
+      getChildren(array[i].children, options, level+1)
+    }
+  }
 }
+
+filters.value[1].options.options = [];
+getChildren(form.treeData.value.children, filters.value[1].options.options);
 
 </script>
