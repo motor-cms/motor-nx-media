@@ -5,20 +5,11 @@
     @submit="onSubmit"
   >
     <h6 class="text-uppercase text-body text-xs font-weight-bolder">
-      {{ $t('motor-admin.global.basic_information')}}
+      {{ $t('motor-admin.global.basic_information') }}
     </h6>
     <div class="row">
       <div class="col-md-8">
         <div class="row">
-          <div class="col-md-6">
-            <FormsInputField
-              type="text"
-              name="description"
-              id="description"
-              :label="$t('motor-media.files.description')"
-              v-model="model.description"
-            ></FormsInputField>
-          </div>
           <div class="col-md-6">
             <FormsInputField
               type="text"
@@ -40,23 +31,40 @@
           <div class="col-md-6">
             <FormsInputField
               type="text"
+              name="description"
+              id="description"
+              :label="$t('motor-media.files.description')"
+              v-model="model.description"
+            ></FormsInputField>
+          </div>
+          <div class="col-md-6">
+            <FormsInputField
+              type="text"
               name="alt_text"
               id="alt_text"
               :label="$t('motor-media.files.alt_text')"
               v-model="model.alt_text"
             ></FormsInputField>
           </div>
-          <div class="col-md-12">
-            <FormsFileUploadField
-              name="files"
-              id="files"
-              :allow-delete="true"
-              :multiple="true"
-              :label="$t('motor-media.files.file')"
-              v-model="model.files"
-              :fullScreenDragAndDrop="true"
-            ></FormsFileUploadField>
-          </div>
+        </div>
+        <FormsHiddenInputField
+          name="tags"
+          id="tags"
+          v-model="model.tags"
+        ></FormsHiddenInputField>
+        <FormsTagField v-model="model.tags"/>
+        <div class="clearfix"/>
+        <div class="col-md-12">
+          <FormsFileUploadField
+            @update-metadata="updateMetadata"
+            name="files"
+            id="files"
+            :allow-delete="true"
+            :multiple="true"
+            :label="$t('motor-media.files.file')"
+            v-model="model.files"
+            :fullScreenDragAndDrop="true"
+          ></FormsFileUploadField>
         </div>
       </div>
       <div class="col-md-4">
@@ -86,6 +94,13 @@ const {model, onSubmit, treeData, form, getCategoryDataByScope} = fileForm()
 const title = ref(t('motor-media.files.create'))
 
 const multiple = ref(false)
+
+const metadata = ref([]);
+
+const updateMetadata = (data: []) => {
+    console.log("received metadata", data);
+    metadata.value = data;
+}
 
 await getCategoryDataByScope(CategoryScopes.MEDIA)
 model.value.categories = model.value.categories.map((category) => {
