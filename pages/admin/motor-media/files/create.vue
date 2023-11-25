@@ -46,6 +46,14 @@
               v-model="model.alt_text"
             ></FormsInputField>
           </div>
+          <div class="col-md-12">
+            <FormsCheckboxField
+                name="is_excluded_from_search_index"
+                id="is_excluded_from_search_index"
+                :label="$t('motor-media.files.is_excluded_from_search_index')"
+                v-model="model.is_excluded_from_search_index"
+            ></FormsCheckboxField>
+          </div>
         </div>
         <FormsHiddenInputField
           name="tags"
