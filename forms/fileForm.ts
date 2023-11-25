@@ -17,6 +17,9 @@ export default function fileForm() {
     source: '',
     alt_text: '',
     categories: [],
+    is_excluded_from_search_index: false,
+    metadata: [],
+    tags: [],
     files: [],
     file: null,
   }
@@ -33,7 +36,7 @@ export default function fileForm() {
     alt_text: string().nullable(),
     is_global: number().nullable(),
     categories: array().min(1).required().label(t('motor-admin.categories.categories')),
-    files: array().min(1).label(t('motor-media.files.files')),
+    files: array().label(t('motor-media.files.files')),
     file: object().nullable()
   }
 
@@ -47,6 +50,8 @@ export default function fileForm() {
           tempFiles.push({
             name: formData.files[i].name,
             dataUrl: formData.files[i].url.substring(startBase64),
+            description: formData.files[i].description,
+            alt_text: formData.files[i].alt_text,
           })
         }
       }

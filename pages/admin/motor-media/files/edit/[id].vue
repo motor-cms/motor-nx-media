@@ -1,24 +1,15 @@
 <template>
   <AdminCommonForm
-    :back-route="routeParser.routeDottedToSlash('admin.motor-media.files')"
+    back-route="admin.motor-media.files"
     :title="title"
     @submit="onSubmit"
   >
     <h6 class="text-uppercase text-body text-xs font-weight-bolder">
-      {{ $t('motor-admin.global.basic_information')}}
+      {{ $t('motor-admin.global.basic_information') }}
     </h6>
     <div class="row">
       <div class="col-md-8">
         <div class="row">
-          <div class="col-md-6">
-            <FormsInputField
-              type="text"
-              name="description"
-              id="description"
-              :label="$t('motor-media.files.description')"
-              v-model="model.description"
-            ></FormsInputField>
-          </div>
           <div class="col-md-6">
             <FormsInputField
               type="text"
@@ -40,22 +31,44 @@
           <div class="col-md-6">
             <FormsInputField
               type="text"
+              name="description"
+              id="description"
+              :label="$t('motor-media.files.description')"
+              v-model="model.description"
+            ></FormsInputField>
+          </div>
+          <div class="col-md-6">
+            <FormsInputField
+              type="text"
               name="alt_text"
               id="alt_text"
               :label="$t('motor-media.files.alt_text')"
               v-model="model.alt_text"
             ></FormsInputField>
           </div>
-          <div class="col-md-12">
-            <FormsFileUploadField
-              name="file"
-              :allow-delete="true"
-              id="file"
-              :label="$t('motor-media.files.file')"
-              v-model="model.file"
-              :fullScreenDragAndDrop="true"
-            ></FormsFileUploadField>
-          </div>
+        </div>
+          <FormsCheckboxField
+            name="is_excluded_from_search_index"
+            id="is_excluded_from_search_index"
+            :label="$t('motor-media.files.is_excluded_from_search_index')"
+            v-model="model.is_excluded_from_search_index"
+          ></FormsCheckboxField>
+        <FormsHiddenInputField
+          name="tags"
+          id="tags"
+          v-model="model.tags"
+        ></FormsHiddenInputField>
+        <FormsTagField v-model="model.tags"/>
+        <div class="clearfix"/>
+        <div class="col-md-12">
+          <FormsFileUploadField
+            name="file"
+            :allow-delete="true"
+            id="file"
+            :label="$t('motor-media.files.file')"
+            v-model="model.file"
+            :fullScreenDragAndDrop="true"
+          ></FormsFileUploadField>
         </div>
       </div>
       <div class="col-md-4">
@@ -71,7 +84,7 @@
   </AdminCommonForm>
 </template>
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
+import {useI18n} from 'vue-i18n'
 import fileForm from '@zrm/motor-nx-media/forms/fileForm'
 import useRouteParser from "@zrm/motor-nx-core/composables/route/parse";
 import {CategoryScopes} from "@zrm/motor-nx-admin/types/categories.enums";
@@ -79,13 +92,13 @@ import {CategoryScopes} from "@zrm/motor-nx-admin/types/categories.enums";
 const routeParser = useRouteParser();
 
 // Load i18n module
-const { t } = useI18n()
+const {t} = useI18n()
 
 // Load form
-const { model, onSubmit, treeData, form, getData, getCategoryDataByScope} = fileForm()
+const {model, onSubmit, treeData, form, getData, getCategoryDataByScope} = fileForm()
 
 // Set default action title
-const title = ref(t('motor-media.files.create'))
+const title = ref(t('motor-media.files.edit'))
 
 await getData();
 await getCategoryDataByScope(CategoryScopes.MEDIA)
