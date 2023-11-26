@@ -2,32 +2,6 @@
   <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
     <div class="row">
       <div class="col-lg-12">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="d-flex flex-row align-items-center">
-              <h6 class="m-0" v-if="!loading">{{ name }}</h6>
-              <SpinnerSmall v-if="updatingInBackground"/>
-            </div>
-          </div>
-
-          <div class="col-md-6 text-end">
-            <component
-              v-for="component in headerActions"
-              :key="component.name"
-              :is="component.name"
-            />
-            <NuxtLink v-if="hasBackButton && backRoute?.length > 0" :to="goBackRoute">
-              <button class="btn btn-outline-primary border-radius-sm text-capitalize text-base mb-4 me-1">
-                {{ $t('global.back') }}
-              </button>
-            </NuxtLink>
-            <NuxtLink v-if="!withoutCreate && createRecordRoute" :to="createRecordRoute">
-              <a class="btn bg-gradient-primary border-radius-sm text-capitalize text-base mb-4 me-1">{{
-                  createLabel
-                }}</a>
-            </NuxtLink>
-          </div>
-        </div>
         <div class="row align-items-center">
           <component
             v-for="f in filters"
@@ -166,7 +140,7 @@
         </div>
 
         <div class="card-body pt-1 pb-1">
-          <a href="#" @click.prevent="chooseImage(record)" class="card-title d-block text-darker">
+          <a href="#" @click.prevent="chooseMedia(record)" class="card-title d-block text-darker">
             {{ record.file.name }}
           </a>
         </div>
@@ -363,7 +337,7 @@ export default defineComponent({
       gridStore.init(props.meta);
     })
 
-    const chooseImage = (record:{}) => {
+    const chooseMedia = (record:{}) => {
       ctx.emit('resolve', record);
     };
 
@@ -386,7 +360,7 @@ export default defineComponent({
       gridStore,
       isImage,
       visible,
-      chooseImage
+      chooseMedia
     }
   },
 })
