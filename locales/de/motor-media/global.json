@@ -6,5 +6,8 @@
   "drop_files_here": "Dateien hier ablegen",
   "file": "Datei",
   "type": "Typ",
-  "size": "Größe"
+  "size": "Größe",
+  "choose_file": "Datei auswählen",
+  "accept_crop": "Beschnitt übernehmen",
+  "use_original": "Original verwenden"
 }
