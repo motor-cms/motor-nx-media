@@ -106,7 +106,6 @@ const multiple = ref(false)
 const metadata = ref([]);
 
 const updateMetadata = (data: []) => {
-    console.log("received metadata", data);
     metadata.value = data;
 }
 
