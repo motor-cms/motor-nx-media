@@ -1,5 +1,5 @@
 <template>
-  <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
+  <div class="col-lg-12 col-md-12 mb-4">
     <div class="row">
       <div class="col-lg-12">
         <div class="row align-items-center">
@@ -85,9 +85,10 @@
               @change="submitFilter($event)"
               v-model="filterValues.per_page"
             >
-              <option value="25">25</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
+              <option value="16">16</option>
+              <option value="32">32</option>
+              <option value="48">48</option>
+              <option value="64">64</option>
             </select>
             <div v-if="meta.total > 0" class="float-end mt-2 me-2">
               {{ meta.from }} - {{ meta.to }} / {{ meta.total }}
@@ -116,10 +117,9 @@
       :key="record.id"
       class="col-md-3 media-modal-card"
     >
-      <div class="media-modal card">
-        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
+      <div class="media-modal card" @click.prevent="chooseMedia(record)" :class="{'is-image': isImage(record.file.mime_type)}">
+        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1" v-if="record.exists && isImage(record.file.mime_type)">
           <vue-easy-lightbox
-            v-if="record.exists && isImage(record.file.mime_type)"
             scrollDisabled
             moveDisabled
             :visible="visible"
@@ -129,20 +129,22 @@
           >
           </vue-easy-lightbox>
             <img
-              v-if="record.exists && isImage(record.file.mime_type)"
               :src="record.file.conversions.thumb"
               class="img-fluid border-radius-lg"
-              alt="Responsive image"
+              :alt="record.alt_text"
+              :title="record.alt_text"
             />
             <span v-if="!record.exists">{{
                 $t('motor-media.global.file_not_found')
               }}</span>
         </div>
 
-        <div class="card-body pt-1 pb-1">
-          <a href="#" @click.prevent="chooseMedia(record)" class="card-title d-block text-darker">
-            {{ record.file.name }}
-          </a>
+        <div class="card-body pt-3 pb-3">
+            <div class="file-info">
+              <span style="word-break: break-all;">{{ record.file.name }}</span>
+              <span class="badge bg-secondary">{{ convertMimeType(record.file.mime_type) }}</span>
+            </div>
+            {{ record.description }}
         </div>
       </div>
 
@@ -158,15 +160,26 @@
   }
 }
 .media-modal .card-header {
-  height: 210px;
+  min-height: 100px;
+  max-height: 170px;
   background: none;
 }
+
+.media-modal.is-image .card-header {
+  max-height: 220px;
+}
+
 .media-modal-card {
   margin-bottom: 10px;
 }
 
 .media-modal.card {
-  height: 280px;
+  min-height: 100px;
+  max-height: 170px;
+}
+
+.media-modal.card.is-image {
+  max-height: 300px;
 }
 
 .media-modal img {
@@ -178,6 +191,12 @@
   -moz-user-drag: none;
   -o-user-drag: none;
   user-drag: none;}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 </style>
 <script lang="ts">
 import {
@@ -196,6 +215,7 @@ import Button from "@zrm/motor-nx-core/components/admin/cell/Button.vue";
 import useRouteParser from "@zrm/motor-nx-core/composables/route/parse";
 import SpinnerSmall from "@zrm/motor-nx-core/components/admin/partials/SpinnerSmall.vue";
 import VueEasyLightbox from "vue-easy-lightbox";
+import {useMimeType} from "@zrm/base-components/composables/useMimeType";
 
 export default defineComponent({
   components: {
@@ -263,20 +283,6 @@ export default defineComponent({
 
 
     const visible = ref(false)
-    // Check mimetype before displaying an image
-    const isImage = (type: string) => {
-      const mimeTypes = [
-        'image/apng',
-        'image/avif',
-        'image/gif',
-        'image/jpeg',
-        'image/png',
-        'image/svg+xml',
-        'image/webp',
-      ]
-
-      return mimeTypes.indexOf(type) > -1
-    }
 
     const appStore = useAppStore()
     const {loading, updatingInBackground} = storeToRefs(appStore)
@@ -287,11 +293,13 @@ export default defineComponent({
 
     const {selectedItemsLength, selectedPageMap, pageSelected, allSelected} = storeToRefs(gridStore);
     const {t} = useI18n()
-    const filterValues = reactive({per_page: route.query.per_page ? route.query.per_page : 25, page: route.query.page ? route.query.page : 1})
+    const filterValues = reactive({per_page: route.query.per_page ? route.query.per_page : 16, page: route.query.page ? route.query.page : 1})
 
     const createRecordRoute = ref(useRouteParser().routeDottedToSlash(props.createRoute))
 
     const goBackRoute = ref(useRouteParser().routeDottedToSlash(props.backRoute))
+
+    const { convertMimeType, isImage } = useMimeType();
 
     const submitFilter = (data: { parameter: string; value: string }) => {
       // Reset page when filtering or searching
@@ -360,7 +368,8 @@ export default defineComponent({
       gridStore,
       isImage,
       visible,
-      chooseMedia
+      chooseMedia,
+      convertMimeType,
     }
   },
 })
