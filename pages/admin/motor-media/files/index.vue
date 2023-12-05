@@ -18,7 +18,6 @@
 import {useI18n} from 'vue-i18n'
 import grid from '@zrm/motor-nx-media/grids/fileGrid'
 import CellFile from '@zrm/motor-nx-core/components/admin/cell/File.vue'
-import categoryRepository from '@zrm/motor-nx-admin/api/category'
 import categoryTreeForm from "@zrm/motor-nx-admin/forms/categoryTreeForm";
 import {CategoryScopes} from "@zrm/motor-nx-admin/types/categories.enums";
 const route = useRoute();
@@ -92,12 +91,11 @@ const refreshGridData = async (params = {}) => {
 
 await refreshRecords(route.query);
 
+// TODO: Refactor
 const form = categoryTreeForm();
 
 // Get catgories from api
 await form.getCategoryDataByScope(CategoryScopes.MEDIA);
-
-console.log(form.treeData);
 
 // make a method that recursively takes all children elements from an array and pushes them into the options array
 const getChildren = (array: any[], options: any[], level: number = 0) => {
