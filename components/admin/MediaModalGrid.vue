@@ -117,8 +117,8 @@
       :key="record.id"
       class="col-md-3 media-modal-card"
     >
-      <div class="media-modal card" @click.prevent="chooseMedia(record)" :class="{'is-image': isImage(record.file.mime_type)}">
-        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1" v-if="record.exists && isImage(record.file.mime_type)">
+      <div class="media-modal card" @click.prevent="chooseMedia(record)" :class="{'is-image': (record && record.file && isImage(record.file.mime_type))}">
+        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1" v-if="record.exists && (record && record.file && isImage(record.file.mime_type))">
           <vue-easy-lightbox
             scrollDisabled
             moveDisabled
