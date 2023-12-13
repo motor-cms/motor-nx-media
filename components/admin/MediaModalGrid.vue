@@ -134,15 +134,15 @@
               :alt="record.alt_text"
               :title="record.alt_text"
             />
-            <span v-if="!record.exists">{{
+            <span v-if="!record.exists || !record.file">{{
                 $t('motor-media.global.file_not_found')
               }}</span>
         </div>
 
         <div class="card-body pt-3 pb-3">
             <div class="file-info">
-              <span style="word-break: break-all;">{{ record.file.name }}</span>
-              <span class="badge bg-secondary">{{ convertMimeType(record.file.mime_type) }}</span>
+              <span style="word-break: break-all;">{{ record?.file?.name }}</span>
+              <span class="badge bg-secondary">{{ convertMimeType(record?.file?.mime_type) }}</span>
             </div>
             {{ record.description }}
         </div>
