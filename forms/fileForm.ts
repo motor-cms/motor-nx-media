@@ -1,7 +1,7 @@
 import baseForm from '@zrm/motor-nx-core/forms/baseForm'
 import {useI18n} from 'vue-i18n'
 import modelRepository from '@zrm/motor-nx-media/api/file'
-import {object, string, number, date, InferType, array, Schema} from 'yup';
+import {object, string, number, array} from 'yup';
 import {storeToRefs} from "pinia";
 export default function fileForm() {
   // Load i18n module
