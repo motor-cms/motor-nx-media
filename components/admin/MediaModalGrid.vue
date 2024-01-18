@@ -215,7 +215,7 @@ import Button from "@zrm/motor-nx-core/components/admin/cell/Button.vue";
 import useRouteParser from "@zrm/motor-nx-core/composables/route/parse";
 import SpinnerSmall from "@zrm/motor-nx-core/components/admin/partials/SpinnerSmall.vue";
 import VueEasyLightbox from "vue-easy-lightbox";
-import {useMimeType} from "@zrm/base-components/composables/useMimeType";
+import {useMimeType} from "@zrm/base-components/composables/shared/useMimeType";
 
 export default defineComponent({
   components: {
