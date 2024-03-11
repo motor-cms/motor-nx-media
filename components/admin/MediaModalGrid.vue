@@ -216,7 +216,7 @@ import useRouteParser from "@zrm/motor-nx-core/composables/route/parse";
 import SpinnerSmall from "@zrm/motor-nx-core/components/admin/partials/SpinnerSmall.vue";
 import VueEasyLightbox from "vue-easy-lightbox";
 import {useMimeType} from "@zrm/base-components/composables/shared/useMimeType";
-import {useFilterStore} from "~/packages/motor-nx-core/stores/filter";
+import {useFilterStore} from "@zrm/motor-nx-core/stores/filter";
 
 export default defineComponent({
   components: {
