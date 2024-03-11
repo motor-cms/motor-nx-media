@@ -216,6 +216,7 @@ import useRouteParser from "@zrm/motor-nx-core/composables/route/parse";
 import SpinnerSmall from "@zrm/motor-nx-core/components/admin/partials/SpinnerSmall.vue";
 import VueEasyLightbox from "vue-easy-lightbox";
 import {useMimeType} from "@zrm/base-components/composables/shared/useMimeType";
+import {useFilterStore} from "~/packages/motor-nx-core/stores/filter";
 
 export default defineComponent({
   components: {
@@ -301,15 +302,43 @@ export default defineComponent({
 
     const { convertMimeType, isImage } = useMimeType();
 
+    const filterStore = useFilterStore();
+    Object.assign(filterValues, filterStore.getFilterValuesForGrid(route.name));
+
     const submitFilter = (data: { parameter: string; value: string }) => {
+
+      if (data instanceof Event) {
+        data = ref({
+          parameter: 'per-page',
+          value: filterValues.perPage
+        });
+      }
+      // Add search filter
+      filterValues[data.parameter] = data.value.value;
+
       // Reset page when filtering or searching
       filterValues.page = 1
       if (data.parameter) {
         filterValues[data.parameter] = data.value
       }
-      router.replace({query: {page: filterValues.page, per_page: filterValues.per_page}})
+
+      // Save current filter values
+      filterStore.setFilterValuesForGrid(route.name, filterValues);
+
+      router.replace({query: filterStore.getFilterValuesForGrid(route.name)})
       ctx.emit('submit', filterValues)
     }
+
+
+    // const submitFilter = (data: { parameter: string; value: string }) => {
+    //   // Reset page when filtering or searching
+    //   filterValues.page = 1
+    //   if (data.parameter) {
+    //     filterValues[data.parameter] = data.value
+    //   }
+    //   router.replace({query: {page: filterValues.page, per_page: filterValues.per_page}})
+    //   ctx.emit('submit', filterValues)
+    // }
 
     const previousPage = () => {
       filterValues.page--
