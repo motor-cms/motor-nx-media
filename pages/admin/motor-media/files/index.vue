@@ -35,10 +35,12 @@ const columns = ref([
   {
     name: t('motor-media.files.name'),
     prop: 'file.file_name',
+    sortable: true,
   },
   {
     name: t('motor-media.files.mime_type'),
     prop: 'file.mime_type',
+    sortable: true,
   },
   {
     name: '',
