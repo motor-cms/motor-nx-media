@@ -30,14 +30,14 @@ export default function fileForm() {
   formSchema.value =  {
     id: number().nullable(),
     client_id: number().nullable(),
-    description: string().nullable(),
-    author: string().min(3).nullable().label(t('motor-media.files.author')),
-    source: string().nullable(),
-    alt_text: string().nullable(),
+    description: string().required().label(t('motor-media.files.description')),
+    author: string().min(3).required().label(t('motor-media.files.author')),
+    source: string().required().label(t('motor-media.files.source')),
+    alt_text: string().required().label(t('motor-media.files.alt_text')),
     is_global: number().nullable(),
     categories: array().min(1).required().label(t('motor-admin.categories.categories')),
     files: array().label(t('motor-media.files.files')),
-    file: object().nullable()
+    file: object().required()
   }
 
   // Sanitize file data
