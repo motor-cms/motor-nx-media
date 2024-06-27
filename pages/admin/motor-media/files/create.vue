@@ -65,12 +65,12 @@
         <div class="col-md-12">
           <FormsFileUploadField
             @update-metadata="updateMetadata"
-            name="files"
-            id="files"
+            name="file"
+            id="file"
             :allow-delete="true"
-            :multiple="true"
+            :multiple="false"
             :label="$t('motor-media.files.file')"
-            v-model="model.files"
+            v-model="model.file"
             :fullScreenDragAndDrop="true"
           ></FormsFileUploadField>
         </div>
