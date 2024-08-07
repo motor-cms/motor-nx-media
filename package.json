@@ -1,7 +1,7 @@
 {
   "name": "@zrm/motor-nx-media",
   "type": "module",
-  "version": "2.27.0",
+  "version": "2.28.0",
   "main": "./nuxt.config.ts",
   "scripts": {
     "dev": "nuxi prepare & nuxi dev .playground",
