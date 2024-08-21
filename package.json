@@ -8,7 +8,8 @@
     "build": "nuxi build .playground",
     "generate": "nuxi generate .playground",
     "preview": "nuxi preview .playground",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prepare": "husky || true"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
@@ -20,5 +21,10 @@
   "dependencies": {
     "vue-advanced-cropper": "^2.8.8",
     "vue-i18n": "9.5.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "../../node_modules/cz-customizable"
+    }
   }
 }
