@@ -329,44 +329,42 @@ export default defineComponent({
       ctx.emit('submit', filterValues)
     }
 
-
-    // const submitFilter = (data: { parameter: string; value: string }) => {
-    //   // Reset page when filtering or searching
-    //   filterValues.page = 1
-    //   if (data.parameter) {
-    //     filterValues[data.parameter] = data.value
-    //   }
-    //   router.replace({query: {page: filterValues.page, per_page: filterValues.per_page}})
-    //   ctx.emit('submit', filterValues)
-    // }
-
     const previousPage = () => {
+      props.meta.current_page--;
       filterValues.page--
-      router.replace({query: {page: filterValues.page, per_page: filterValues.per_page}})
+      filterStore.setFilterValuesForGrid(route.name, filterValues);
+      router.replace({query: filterStore.getFilterValuesForGrid(route.name)})
       ctx.emit('submit', filterValues)
     }
 
     const nextPage = () => {
+      props.meta.current_page++;
       filterValues.page++
-      router.replace({query: {page: filterValues.page, per_page: filterValues.per_page}})
+      filterStore.setFilterValuesForGrid(route.name, filterValues);
+      router.replace({query: filterStore.getFilterValuesForGrid(route.name)})
       ctx.emit('submit', filterValues)
     }
 
     const firstPage = () => {
+      props.meta.current_page = 1;
       filterValues.page = 1;
-      router.replace({query: {page: filterValues.page, per_page: filterValues.per_page}})
+      filterStore.setFilterValuesForGrid(route.name, filterValues);
+      router.replace({query: filterStore.getFilterValuesForGrid(route.name)})
       ctx.emit('submit', filterValues)
     }
     const lastPage = () => {
+      props.meta.current_page = props.meta.last_page;
       filterValues.page = props.meta.last_page;
-      router.replace({query: {page: filterValues.page, per_page: filterValues.per_page}})
+      filterStore.setFilterValuesForGrid(route.name, filterValues);
+      router.replace({query: filterStore.getFilterValuesForGrid(route.name)})
       ctx.emit('submit', filterValues)
     }
 
     const pageOptions = computed(() => Array(props.meta.last_page).fill(1).map((_, i) => i + 1))
 
     const goToPage = () => {
-      router.replace({query: {page: filterValues.page, per_page: filterValues.per_page}})
+      filterStore.setFilterValuesForGrid(route.name, filterValues);
+      router.replace({query: filterStore.getFilterValuesForGrid(route.name)})
       ctx.emit('submit', filterValues)
     }
 
