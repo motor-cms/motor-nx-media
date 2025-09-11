@@ -1,4 +1,5 @@
 <template>
+  DEBUG Files
   <AdminCommonGrid
     :name="$t('motor-media.files.files')"
     create-route="admin.motor-media.files.create"
