@@ -1,7 +1,7 @@
 {
   "files": "Files",
   "file": "File",
-  "new": "Create file",
+  "create": "Create file",
   "edit": "Edit file",
   "save": "Save file",
   "created": "File created",
@@ -16,5 +16,6 @@
   "drop_file_here": "Drop file here",
   "please_select_category": "Please select at least one category",
   "name": "Name",
-  "mime_type": "Mime type"
+  "mime_type": "Mime type",
+  "is_excluded_from_search_index": "Is excluded from search index"
 }
