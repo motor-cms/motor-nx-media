@@ -67,6 +67,7 @@
             name="file"
             id="file"
             :allow-delete="true"
+            :multiple="!edit"
             :label="$t('motor-media.files.file')"
             v-model="model.file"
             :fullScreenDragAndDrop="true"
@@ -94,19 +95,23 @@ import {CategoryScopes} from "@zrm/motor-nx-admin/types/categories.enums";
 const {t} = useI18n()
 
 // Load form
-const {model, onSubmit, treeData, form, getData, getCategoryDataByScope} = fileForm()
+const {model, onSubmit, treeData, getData, getCategoryDataByScope} = fileForm()
 
 const props = defineProps({
   edit: Boolean,
 });
+
 // Set default action title
-const title = props.edit ? t('motor-media.files.edit') : t('motor-media.files.edit');
+const title = props.edit ? t('motor-media.files.edit') : t('motor-media.files.create');
+const edit = computed(() => props.edit);
 
 if (props.edit) {
   await getData();
+  // When editing, keep file as single object (not array) for single file mode
+  // The FileUploadField will handle it properly with multiple=false
 }
 await getCategoryDataByScope(CategoryScopes.MEDIA)
-model.value.categories = model.value.categories.map((category) => {
+model.value.categories = model.value.categories.map((category: {id: number}) => {
   return category.id
 })
 
