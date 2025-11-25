@@ -63,15 +63,29 @@
         <FormsTagField v-model="model.tags"/>
         <div class="clearfix"/>
         <div class="col-md-12">
-          <FormsFileUploadField
+          <!-- Use SingleFileUploadField for edit mode (single file) -->
+          <FormsSingleFileUploadField
+            v-if="edit"
             name="file"
             id="file"
             :allow-delete="true"
-            :multiple="!edit"
             :label="$t('motor-media.files.file')"
             v-model="model.file"
             :fullScreenDragAndDrop="true"
-          ></FormsFileUploadField>
+          ></FormsSingleFileUploadField>
+
+          <!-- Use MultiFileUploadField for create mode (multiple files) -->
+          <FormsMultiFileUploadField
+            v-else
+            name="file"
+            id="file"
+            :allow-delete="true"
+            :label="$t('motor-media.files.file')"
+            v-model="model.file"
+            :fullScreenDragAndDrop="true"
+            :default-description="model.description"
+            :default-alt-text="model.alt_text"
+          ></FormsMultiFileUploadField>
         </div>
       </div>
       <div class="col-md-4">
@@ -87,6 +101,7 @@
   </AdminCommonForm>
 </template>
 <script setup lang="ts">
+import {computed} from 'vue'
 import {useI18n} from 'vue-i18n'
 import fileForm from '@zrm/motor-nx-media/forms/fileForm'
 import {CategoryScopes} from "@zrm/motor-nx-admin/types/categories.enums";
