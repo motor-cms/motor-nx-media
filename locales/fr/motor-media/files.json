@@ -1,7 +1,7 @@
 {
   "files": "Fichiers",
   "file": "Fichier",
-  "new": "Créer un fichier",
+  "create": "Créer un fichier",
   "edit": "Éditer le fichier",
   "save": "Enregistrer le fichier",
   "created": "Fichier créé",
@@ -16,5 +16,6 @@
   "drop_file_here": "Glissez/déposez un fichier ici",
   "please_select_category": "Merci de sélectionner une catégorie au minimum",
   "name": "Nom",
-  "mime_type": "Type de Mime"
+  "mime_type": "Type de Mime",
+  "is_excluded_from_search_index": "Exclu de l'index des moteurs de recherche"
 }
