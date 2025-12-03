@@ -1,7 +1,7 @@
 {
   "name": "@zrm/motor-nx-media",
   "type": "module",
-  "version": "2.71.0",
+  "version": "4.0.0-rc",
   "main": "./nuxt.config.ts",
   "scripts": {
     "dev": "nuxi prepare & nuxi dev .playground",
@@ -14,7 +14,7 @@
   "devDependencies": {
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "eslint": "^8.28.0",
-    "nuxt": "^3.15.1",
+    "nuxt": "^4.1.2",
     "typescript": "^4.9.5",
     "filesize": "^10.1.0"
   },
