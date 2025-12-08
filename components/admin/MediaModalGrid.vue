@@ -44,7 +44,7 @@
                   name="per-page"
                   @change="goToPage"
                 >
-                  <option v-for="option in pageOptions" :value="option">Seite {{ option }} von
+                  <option v-for="option in pageOptions" :key="option" :value="option">Seite {{ option }} von
                     {{ meta.last_page }}
                   </option>
                 </select>
