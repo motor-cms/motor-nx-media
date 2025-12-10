@@ -4,24 +4,24 @@
       <div class="col-lg-12">
         <div class="row align-items-center">
           <component
+            :is="f.name"
             v-for="f in filters"
             :key="f.name"
-            :is="f.name"
             :options="f.options"
             @submit="submitFilter"
           ></component>
-          <div class="col" v-if="!loading">
+          <div v-if="!loading" class="col">
             <ul class="pagination float-end m-0">
-              <li class="page-item disabled" v-if="meta.current_page === 1">
+              <li v-if="meta.current_page === 1" class="page-item disabled">
                 <a class="page-link text-black">
                   <fa icon="chevron-left"/>
                 </a>
               </li>
 
               <li
+                v-if="meta.current_page > 1"
                 class="page-item"
                 @click="firstPage"
-                v-if="meta.current_page > 1"
               >
                 <a class="page-link text-black">
                   <fa icon="chevron-left"/>
@@ -29,9 +29,9 @@
                 </a>
               </li>
               <li
+                v-if="meta.current_page > 1"
                 class="page-item"
                 @click="previousPage"
-                v-if="meta.current_page > 1"
               >
                 <a class="page-link text-black">
                   <fa icon="chevron-left"/>
@@ -39,20 +39,20 @@
               </li>
               <li>
                 <select
+                  v-model="filterValues.page"
                   class="form-control"
                   name="per-page"
                   @change="goToPage"
-                  v-model="filterValues.page"
                 >
-                  <option v-for="option in pageOptions" :value="option">Seite {{ option }} von
+                  <option v-for="option in pageOptions" :key="option" :value="option">Seite {{ option }} von
                     {{ meta.last_page }}
                   </option>
                 </select>
               </li>
               <li
+                v-if="meta.current_page < meta.last_page"
                 class="page-item"
                 @click="nextPage()"
-                v-if="meta.current_page < meta.last_page"
               >
                 <a class="page-link text-black">
                   <fa icon="chevron-right"/>
@@ -60,9 +60,9 @@
               </li>
 
               <li
+                v-if="meta.current_page < meta.last_page"
                 class="page-item"
                 @click="lastPage()"
-                v-if="meta.current_page < meta.last_page"
               >
                 <a class="page-link text-black">
                   <fa icon="chevron-right"/>
@@ -71,8 +71,8 @@
               </li>
 
               <li
-                class="page-item disabled"
                 v-if="meta.current_page === meta.last_page"
+                class="page-item disabled"
               >
                 <a class="page-link text-black">
                   <fa icon="chevron-right"/>
@@ -80,10 +80,10 @@
               </li>
             </ul>
             <select
+              v-model="filterValues.per_page"
               class="form-control max-width-100 d-inline float-end me-2"
               name="per-page"
               @change="submitFilter($event)"
-              v-model="filterValues.per_page"
             >
               <option value="16">16</option>
               <option value="32">32</option>
@@ -117,11 +117,11 @@
       :key="record.id"
       class="col-md-3 media-modal-card"
     >
-      <div class="media-modal card" @click.prevent="chooseMedia(record)" :class="{'is-image': (record && record.file && isImage(record.file.mime_type))}">
-        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1" v-if="record.exists && (record && record.file && isImage(record.file.mime_type))">
+      <div class="media-modal card" :class="{'is-image': (record && record.file && isImage(record.file.mime_type))}" @click.prevent="chooseMedia(record)">
+        <div v-if="record.exists && (record && record.file && isImage(record.file.mime_type))" class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
           <vue-easy-lightbox
-            scrollDisabled
-            moveDisabled
+            scroll-disabled
+            move-disabled
             :visible="visible"
             :imgs="[record.file.conversions.preview]"
             :index="0"
@@ -151,53 +151,6 @@
     </div>
   </div>
 </template>
-<style lang="scss">
-.media-modal-card {
-  .card {
-    &:hover {
-      background-color: var(--c-primary-30);
-    }
-  }
-}
-.media-modal .card-header {
-  min-height: 100px;
-  max-height: 170px;
-  background: none;
-}
-
-.media-modal.is-image .card-header {
-  max-height: 220px;
-}
-
-.media-modal-card {
-  margin-bottom: 10px;
-}
-
-.media-modal.card {
-  min-height: 100px;
-  max-height: 170px;
-}
-
-.media-modal.card.is-image {
-  max-height: 300px;
-}
-
-.media-modal img {
-  display: block;
-  max-height: 200px;
-  margin: 0 auto;
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  user-drag: none;}
-
-.file-info {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-</style>
 <script lang="ts">
 import {
   computed,
@@ -401,3 +354,50 @@ export default defineComponent({
   },
 })
 </script>
+<style lang="scss">
+.media-modal-card {
+  .card {
+    &:hover {
+      background-color: var(--c-primary-30);
+    }
+  }
+}
+.media-modal .card-header {
+  min-height: 100px;
+  max-height: 170px;
+  background: none;
+}
+
+.media-modal.is-image .card-header {
+  max-height: 220px;
+}
+
+.media-modal-card {
+  margin-bottom: 10px;
+}
+
+.media-modal.card {
+  min-height: 100px;
+  max-height: 170px;
+}
+
+.media-modal.card.is-image {
+  max-height: 300px;
+}
+
+.media-modal img {
+  display: block;
+  max-height: 200px;
+  margin: 0 auto;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+</style>

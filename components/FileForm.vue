@@ -12,53 +12,53 @@
         <div class="row">
           <div class="col-md-6">
             <FormsInputField
+              id="author"
+              v-model="model.author"
               type="text"
               name="author"
-              id="author"
               :label="$t('motor-media.files.author')"
-              v-model="model.author"
             ></FormsInputField>
           </div>
           <div class="col-md-6">
             <FormsInputField
+              id="source"
+              v-model="model.source"
               type="text"
               name="source"
-              id="source"
               :label="$t('motor-media.files.source')"
-              v-model="model.source"
             ></FormsInputField>
           </div>
           <div class="col-md-6">
             <FormsInputField
+              id="description"
+              v-model="model.description"
               type="text"
               name="description"
-              id="description"
               :label="$t('motor-media.files.description')"
-              v-model="model.description"
             ></FormsInputField>
           </div>
           <div class="col-md-6">
             <FormsInputField
+              id="alt_text"
+              v-model="model.alt_text"
               type="text"
               name="alt_text"
-              id="alt_text"
               :label="$t('motor-media.files.alt_text')"
-              v-model="model.alt_text"
             ></FormsInputField>
           </div>
           <div class="col-md-12">
             <FormsCheckboxField
-                name="is_excluded_from_search_index"
                 id="is_excluded_from_search_index"
-                :label="$t('motor-media.files.is_excluded_from_search_index')"
                 v-model="model.is_excluded_from_search_index"
+                name="is_excluded_from_search_index"
+                :label="$t('motor-media.files.is_excluded_from_search_index')"
             ></FormsCheckboxField>
           </div>
         </div>
         <FormsHiddenInputField
-          name="tags"
           id="tags"
           v-model="model.tags"
+          name="tags"
         ></FormsHiddenInputField>
         <FormsTagField v-model="model.tags"/>
         <div class="clearfix"/>
@@ -66,23 +66,23 @@
           <!-- Use SingleFileUploadField for edit mode (single file) -->
           <FormsSingleFileUploadField
             v-if="edit"
-            name="file"
             id="file"
+            v-model="model.file"
+            name="file"
             :allow-delete="true"
             :label="$t('motor-media.files.file')"
-            v-model="model.file"
-            :fullScreenDragAndDrop="true"
+            :full-screen-drag-and-drop="true"
           ></FormsSingleFileUploadField>
 
           <!-- Use MultiFileUploadField for create mode (multiple files) -->
           <FormsMultiFileUploadField
             v-else
-            name="file"
             id="file"
+            v-model="model.file"
+            name="file"
             :allow-delete="true"
             :label="$t('motor-media.files.file')"
-            v-model="model.file"
-            :fullScreenDragAndDrop="true"
+            :full-screen-drag-and-drop="true"
             :default-description="model.description"
             :default-alt-text="model.alt_text"
           ></FormsMultiFileUploadField>
@@ -90,10 +90,10 @@
       </div>
       <div class="col-md-4">
         <FormsCheckboxTreeField
-          name="categories"
           id="categories"
-          :label="$t('motor-admin.categories.categories')"
           v-model="model.categories"
+          name="categories"
+          :label="$t('motor-admin.categories.categories')"
           :tree="treeData.children"
         ></FormsCheckboxTreeField>
       </div>
