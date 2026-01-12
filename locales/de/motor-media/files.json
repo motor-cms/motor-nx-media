@@ -17,5 +17,6 @@
   "please_select_category": "Bitte wählen Sie mindestens eine Kategorie aus",
   "name": "Name",
   "mime_type": "Mime-Typ",
-  "is_excluded_from_search_index": "Ist vom Suchmaschinenindex ausgeschlossen"
+  "is_excluded_from_search_index": "Ist vom Suchmaschinenindex ausgeschlossen",
+  "created_at": "Upload Datum"
 }
