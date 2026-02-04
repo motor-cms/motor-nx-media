@@ -43,6 +43,12 @@ const columns = ref([
     sortable: true,
   },
   {
+    name: t('motor-media.files.created_at'),
+    prop: 'file.created_at',
+    sortable: true,
+    renderer: {type: 'datetime'},
+  },
+  {
     name: '',
     prop: 'actions',
     columnStyle: 'width: 200px',

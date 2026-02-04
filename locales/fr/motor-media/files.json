@@ -17,5 +17,6 @@
   "please_select_category": "Merci de sélectionner une catégorie au minimum",
   "name": "Nom",
   "mime_type": "Type de Mime",
-  "is_excluded_from_search_index": "Exclu de l'index des moteurs de recherche"
+  "is_excluded_from_search_index": "Exclu de l'index des moteurs de recherche",
+  "created_at": "Créé le"
 }
