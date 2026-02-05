@@ -17,5 +17,6 @@
   "please_select_category": "Please select at least one category",
   "name": "Name",
   "mime_type": "Mime type",
-  "is_excluded_from_search_index": "Is excluded from search index"
+  "is_excluded_from_search_index": "Is excluded from search index",
+  "created_at": "Created at"
 }
