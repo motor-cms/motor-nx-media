@@ -22,13 +22,22 @@ jobs:
     permissions:
       contents: read
       packages: write # allow GITHUB_TOKEN to publish packages
+      id-token: write # allow OIDC token for Infisical
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version: "20"
+      - name: Fetch Verdaccio token from Infisical
+        uses: Infisical/secrets-action@v1.0.7
+        with:
+          method: oidc
+          domain: https://secrets.tastatur-und-maus.net
+          identity-id: ${{ secrets.INFISICAL_IDENTITY_ID }}
+          project-slug: ${{ secrets.INFISICAL_PROJECT_SLUG }}
+          env-slug: prod
       - uses: JS-DevTools/npm-publish@v3
         with:
-          token: ${{ secrets.PIPELINE_AUTH_TOKEN }}
+          token: ${{ env.PIPELINE_AUTH_TOKEN }}
           tag: ${{ github.ref_name }}
           registry: https://npm.registry.zeitraum.io
